@@ -28,6 +28,14 @@
                             <groupId>${project.groupId}</groupId>
                             <artifactId>journal.business</artifactId>
                         </ejbModule>
+                        <ejbModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>journal.storage</artifactId>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>journal.common</artifactId>
+                        </ejbModule>
                         <webModule>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>journal.web</artifactId>
@@ -48,6 +56,16 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>journal.web</artifactId>
             <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>journal.storage</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>journal.common</artifactId>
+            <type>ejb</type>
         </dependency>
     </dependencies>
 </project>

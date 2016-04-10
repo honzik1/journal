@@ -10,6 +10,8 @@
         <module>journal.ear</module>
         <module>journal.web</module>
         <module>journal.business</module>
+        <module>journal.common</module>
+        <module>journal.storage</module>
     </modules>
 
     <properties>
@@ -17,6 +19,7 @@
         <maven.compiler.version>1.7</maven.compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skipSrc>true</skipSrc>
+        <spring.version>4.2.5.RELEASE</spring.version>
     </properties>
 
 
@@ -26,20 +29,32 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>journal.ear</artifactId>
-                <version>${project.version}</version>
                 <type>ejb</type>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>journal.web</artifactId>
-                <version>${project.version}</version>
                 <type>war</type>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>journal.business</artifactId>
-                <version>${project.version}</version>
                 <type>ejb</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>journal.storage</artifactId>
+                <type>ejb</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>journal.common</artifactId>
+                <type>ejb</type>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
@@ -94,6 +109,18 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.10</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

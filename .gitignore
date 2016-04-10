@@ -1,3 +1,5 @@
 /journal.business/target/
 /journal.web/target/
 /journal.ear/target/
+/journal.storage/target/
+/journal.common/target/

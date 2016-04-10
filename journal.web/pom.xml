@@ -12,6 +12,14 @@
 
     <name>${project.artifactId}</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>journal.business</artifactId>
+            <type>ejb</type>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -20,8 +28,8 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingExcludes>lib/*.jar</packagingExcludes>
-                    <warSourceExcludes>lib/*.jar</warSourceExcludes>
+                    <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+                    <warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
                 </configuration>
             </plugin>
         </plugins>
