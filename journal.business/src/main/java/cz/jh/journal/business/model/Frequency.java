@@ -1,4 +1,4 @@
-package cz.jh.journal.model;
+package cz.jh.journal.business.model;
 
 /**
  * @author jan.horky

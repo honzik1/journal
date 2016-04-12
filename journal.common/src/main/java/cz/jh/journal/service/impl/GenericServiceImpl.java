@@ -5,12 +5,12 @@
  */
 package cz.jh.journal.service.impl;
 
-import java.util.List;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import cz.jh.journal.dao.GenericDao;
 import cz.jh.journal.model.DBEntity;
 import cz.jh.journal.service.GenericService;
+import java.util.List;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 /**
  *

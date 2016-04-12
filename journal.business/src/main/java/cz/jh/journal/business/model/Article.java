@@ -1,5 +1,6 @@
-package cz.jh.journal.model;
+package cz.jh.journal.business.model;
 
+import cz.jh.journal.model.NamedEntity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;

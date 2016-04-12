@@ -9,7 +9,9 @@ import cz.jh.journal.storage.model.Document;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.inject.Inject;
+import org.apache.commons.io.FileUtils;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +33,8 @@ public class StorageServiceTest {
      * Test of saveDocument method, of class StorageService.
      */
     @Test
-    public void testSaveAndReadDocument() throws FileNotFoundException {
+    public void testSaveAndReadDocument() throws FileNotFoundException, IOException {
+        FileUtils.deleteDirectory(new File("target/storage"));
         final Document doc = new Document(3264, "pdf");
         store.saveDocument(doc, new FileInputStream("src/test/resources/test-data/health-bingo.pdf"));
         final File file = store.readDocument(doc);

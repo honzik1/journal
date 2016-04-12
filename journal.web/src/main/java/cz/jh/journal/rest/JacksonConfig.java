@@ -5,6 +5,7 @@
  */
 package cz.jh.journal.rest;
 
+import static cz.jh.journal.Const.XML_DATE_TIME_PATTERN;
 import java.text.SimpleDateFormat;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -14,7 +15,6 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import static cz.jh.journal.Const.XML_DATE_TIME_PATTERN;
 
 /**
  *

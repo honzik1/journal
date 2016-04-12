@@ -1,10 +1,10 @@
 package cz.jh.journal.dao;
 
+import cz.jh.journal.model.DBEntity;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
-import cz.jh.journal.model.DBEntity;
 
 /**
  * Generic DAO interface with common method for handling persistency.
@@ -92,10 +92,11 @@ public interface GenericDao<Entity extends DBEntity, ID extends Serializable> {
             Map<String, Object> parameters);
 
     /**
-     * Find All Entities
+     * Find All Entities - be always sure you have small data (use rather findAll with pageSize)
      *
      * @return Found Entities
      */
+    @Deprecated
     List<Entity> findAll();
 
     /**

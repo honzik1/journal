@@ -4,6 +4,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import cz.jh.journal.dao.GenericDao;
+import cz.jh.journal.model.DBEntity;
+import cz.jh.journal.util.ProcessingContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -17,8 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import cz.jh.journal.dao.GenericDao;
-import cz.jh.journal.model.DBEntity;
 
 /**
  * Implementation of Generic DAO
@@ -28,9 +29,9 @@ import cz.jh.journal.model.DBEntity;
  * @param <ID>
  */
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> implements GenericDao<Entity, ID> {
+public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> extends ProcessingContext implements GenericDao<Entity, ID> {
 
-    @PersistenceContext(unitName = "speedev-persistence-unit")
+    @PersistenceContext(unitName = "journalPU")
     protected EntityManager em;
 
     private final Class<Entity> entityType;
@@ -55,11 +56,21 @@ public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> im
 
     @Override
     public Entity save(Entity e) {
-        getEm().persist(e);
+        internalPersist(e);
         return e;
     }
 
+    private void internalPersist(Entity e) {
+        // update entity from context
+        e.setCreatedBy((Long) context.get(USER_KEY));
+
+        getEm().persist(e);
+    }
+
     private DBEntity internalSaveOrUpdate(DBEntity e) {
+        // update entity from context
+        e.setUpdatedBy((Long) context.get(USER_KEY));
+
         if (getEm().contains(e)) {
             return e;
         }
@@ -83,7 +94,7 @@ public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> im
 
     @Override
     public Entity saveAndFlush(Entity e) {
-        getEm().persist(e);
+        internalPersist(e);
         getEm().flush();
         return e;
     }
@@ -92,7 +103,7 @@ public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> im
     public List<Entity> saveAll(Iterable<Entity> itrbl) {
         for (Entity entity : itrbl) {
             if (entity != null) {
-                getEm().persist(entity);
+                internalPersist(entity);
             }
         }
         return Lists.newArrayList(itrbl);

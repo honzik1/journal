@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/jdbc
+              http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!-- Imports application configuration -->
+    <import resource="classpath:/META-INF/application-config.xml" />
+
+    <!--    <beans profile="standard">
+            <jdbc:initialize-database data-source="dataSource">
+                <jdbc:script location="classpath:sql/schema.sql" />
+                <jdbc:script location="classpath:sql/init_data.sql" />
+                <jdbc:script location="classpath:sql/test_srv_data.sql" />
+            </jdbc:initialize-database>
+        </beans>
+    -->
+    <!-- the rest of the configuration is under profiles -->
+    <beans profile="standard">
+
+        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <!--<property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />-->
+            <property name="persistenceUnitName" value="journalPU" />
+            <property name="dataSource" ref="dataSource" />
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                    <property name="database" value="H2" />
+                    <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+                    <property name="generateDdl" value="true" />
+                    <property name="showSql" value="false" />
+                </bean>
+            </property>
+            <property name="packagesToScan">
+                <list>
+                    <value>cz.jh.journal</value>
+                </list>
+            </property>
+            <property name="jpaProperties">
+                <props>
+                    <prop key="hibernate.default_schema">public</prop>
+                    <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                    <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                    <prop key="hibernate.format_sql">true</prop>
+                    <prop key="hibernate.connection.autocommit">false</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+            <property name="entityManagerFactory" ref="entityManagerFactory" />
+            <property name="jpaDialect">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+            </property>
+        </bean>
+
+        <jdbc:embedded-database id="dataSource" type="H2">
+            <!--            <jdbc:script location="classpath:db-schema.sql"/>
+            <jdbc:script location="classpath:db-test-data.sql"/>-->
+        </jdbc:embedded-database>
+    </beans>
+</beans>

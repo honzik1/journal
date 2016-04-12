@@ -1,5 +1,6 @@
-package cz.jh.journal.model;
+package cz.jh.journal.business.model;
 
+import cz.jh.journal.model.DBEntity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class User extends DBEntity {
+public class User extends DBEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -21,6 +22,10 @@ public class User extends DBEntity {
     private String email;
     private String password;
     private boolean active;
+
+    public User() {
+        this.active = true;
+    }
 
     public UserRole getRole() {
         return role;

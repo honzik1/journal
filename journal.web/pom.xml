@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>journal.common</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>journal.business</artifactId>
             <type>ejb</type>
         </dependency>

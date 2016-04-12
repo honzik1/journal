@@ -46,14 +46,14 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
     @Column(nullable = false, updatable = false)
     @NotNull(message = "createdBy is required.")
     @XmlTransient
-    private ID createdBy;
+    private Long createdBy;
 
     /**
      * Update ID of entity.
      */
     @Column(nullable = true, updatable = true, insertable = false)
     @XmlTransient
-    private ID updatedBy;
+    private Long updatedBy;
 
     public DBEntity() {
         createTime = new Date();
@@ -75,19 +75,19 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
         return updateTime;
     }
 
-    public ID getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(ID createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
-    public ID getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(ID updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
     }
 

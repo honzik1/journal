@@ -1,6 +1,8 @@
 package cz.jh.journal.model;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jan.horky
@@ -8,8 +10,10 @@ import javax.persistence.MappedSuperclass;
  * @created 09-4-2016 17:23:00
  */
 @MappedSuperclass
-public class NamedEntity extends DBEntity {
+public class NamedEntity extends DBEntity<Long> {
 
+    @NotNull
+    @Column(nullable = false)
     private String title;
 
     public String getTitle() {
