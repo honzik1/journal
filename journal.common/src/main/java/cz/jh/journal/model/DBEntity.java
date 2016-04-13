@@ -11,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -55,6 +56,11 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
     @XmlTransient
     private Long updatedBy;
 
+    @Version
+    @Column(nullable = false)
+    @XmlTransient
+    private long version;
+
     public DBEntity() {
         createTime = new Date();
     }
@@ -89,6 +95,14 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
 
     public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public void setDBElement(DBEntity<ID> el) {

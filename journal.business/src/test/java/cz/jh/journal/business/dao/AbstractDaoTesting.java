@@ -29,6 +29,6 @@ public class AbstractDaoTesting extends ProcessingContext {
     @Before
     public void initContext() {
         // fake some user in dao tests
-        context.put(USER_KEY, TEST_USER_ID);
+        context.put(LOGGED_USER_ID_KEY, TEST_USER_ID);
     }
 }

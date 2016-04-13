@@ -41,4 +41,11 @@ public class Const {
         return new NullSafeDateFormat(DB_DATE_TIME_PATTERN);
     }
 
+    public static final String JSON_MT = "application/json";
+    public static final String API_BASE_V1 = "/api/v1";
+    public static final String JOURNAL_API_BASE = "/journal";
+    public static final String USER_API_BASE = "/user";
+    public static final String ARTICLE_API_BASE = "/article";
+    public static final String AUTHORIZATION_PROPERTY = "Authorization";
+
 }

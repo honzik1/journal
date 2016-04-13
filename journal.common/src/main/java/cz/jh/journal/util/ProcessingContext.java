@@ -12,7 +12,8 @@ package cz.jh.journal.util;
  */
 public class ProcessingContext {
 
-    public static final String USER_KEY = "context.userId";
+    public static final String LOGGED_USER_ID_KEY = "context.userId";
+    public static final String LOGGED_USER_KEY = "context.user";
 
     protected ThreadLocalContextHolder context = new ThreadLocalContextHolder();
 }

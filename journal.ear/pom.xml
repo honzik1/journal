@@ -44,6 +44,18 @@
                     </modules>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.2.Final</version>
+                <configuration>
+                    <execute-commands>
+                        <commands>
+                            <command>/subsystem=ee/:write-attribute(name=global-modules, value=[{name="com.google.guava", slot="main"},{name="org.apache.commons.lang", slot="main"},{name="org.apache.commons.beanutils", slot="main"},{name="org.apache.commons.codec", slot="main"},{name="org.apache.commons.configuration", slot="main"},{name="org.apache.commons.collections", slot="main"},{name="org.codehaus.jackson.jackson-jaxrs",slot="main"},{name="org.codehaus.jackson.jackson-mapper-asl",slot="main"}])</command>
+                        </commands>
+                    </execute-commands>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>

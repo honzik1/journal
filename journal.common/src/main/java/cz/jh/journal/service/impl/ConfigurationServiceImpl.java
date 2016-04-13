@@ -18,6 +18,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.interceptor.ExcludeDefaultInterceptors;
 import org.apache.commons.configuration.CompositeConfiguration;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
 @ExcludeDefaultInterceptors
 @Named
+@ApplicationScoped
 public class ConfigurationServiceImpl implements ConfigurationService {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(ConfigurationServiceImpl.class.getName());

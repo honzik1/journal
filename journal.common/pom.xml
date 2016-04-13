@@ -17,6 +17,10 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>jose-jwt</artifactId>
+        </dependency>
         <!-- Spring IoC/Test library -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -29,7 +33,14 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.bsc.maven</groupId>

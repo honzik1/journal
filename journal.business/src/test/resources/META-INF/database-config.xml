@@ -21,7 +21,7 @@
     <beans profile="standard">
 
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <!--<property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />-->
+            <property name="persistenceXmlLocation" value="classpath:/META-INF/test-persistence.xml" />
             <property name="persistenceUnitName" value="journalPU" />
             <property name="dataSource" ref="dataSource" />
             <property name="jpaVendorAdapter">

@@ -8,6 +8,7 @@ package cz.jh.journal.business.dao.impl;
 import cz.jh.journal.business.dao.UserDao;
 import cz.jh.journal.business.model.User;
 import cz.jh.journal.dao.impl.GenericDaoImpl;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**
@@ -15,6 +16,11 @@ import javax.inject.Named;
  * @author jan.horky
  */
 @Named
+@RequestScoped
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
+
+    public UserDaoImpl() {
+        super(User.class);
+    }
 
 }

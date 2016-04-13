@@ -8,6 +8,7 @@ package cz.jh.journal.business.dao.impl;
 import cz.jh.journal.business.dao.SubscriptionDao;
 import cz.jh.journal.business.model.Subscription;
 import cz.jh.journal.dao.impl.GenericDaoImpl;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**
@@ -15,6 +16,11 @@ import javax.inject.Named;
  * @author jan.horky
  */
 @Named
+@RequestScoped
 public class SubscriptionDaoImpl extends GenericDaoImpl<Subscription, Long> implements SubscriptionDao {
+
+    public SubscriptionDaoImpl() {
+        super(Subscription.class);
+    }
 
 }

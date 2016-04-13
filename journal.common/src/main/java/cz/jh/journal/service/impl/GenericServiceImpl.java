@@ -8,6 +8,7 @@ package cz.jh.journal.service.impl;
 import cz.jh.journal.dao.GenericDao;
 import cz.jh.journal.model.DBEntity;
 import cz.jh.journal.service.GenericService;
+import cz.jh.journal.util.ProcessingContext;
 import java.util.List;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -17,7 +18,7 @@ import javax.ejb.TransactionAttributeType;
  * @author jan.horky
  */
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-public abstract class GenericServiceImpl<Entity extends DBEntity> implements GenericService<Entity> {
+public abstract class GenericServiceImpl<Entity extends DBEntity> extends ProcessingContext implements GenericService<Entity> {
 
     protected abstract GenericDao getRootEntityDao();
 

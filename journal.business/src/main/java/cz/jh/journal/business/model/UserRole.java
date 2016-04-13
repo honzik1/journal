@@ -7,5 +7,8 @@ package cz.jh.journal.business.model;
  */
 public enum UserRole {
 
-    EDITOR, SUBSCRIBER;
+    EDITOR, SUBSCRIBER, AUTHENTICATED;
+    public static final String AUTH = "AUTHENTICATED";
+    public static final String SUBS = "SUBSCRIBER";
+    public static final String EDIT = "EDITOR";
 }

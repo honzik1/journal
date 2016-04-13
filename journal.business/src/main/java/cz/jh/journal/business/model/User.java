@@ -1,6 +1,7 @@
 package cz.jh.journal.business.model;
 
 import cz.jh.journal.model.DBEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +20,7 @@ public class User extends DBEntity<Long> {
     private UserRole role;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean active;

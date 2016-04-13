@@ -8,14 +8,10 @@ import cz.jh.journal.dao.GenericDao;
 import cz.jh.journal.model.DBEntity;
 import cz.jh.journal.util.ProcessingContext;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
@@ -28,8 +24,7 @@ import javax.persistence.Query;
  * @param <Entity>
  * @param <ID>
  */
-@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> extends ProcessingContext implements GenericDao<Entity, ID> {
+public abstract class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> extends ProcessingContext implements GenericDao<Entity, ID> {
 
     @PersistenceContext(unitName = "journalPU")
     protected EntityManager em;
@@ -37,9 +32,11 @@ public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> ex
     private final Class<Entity> entityType;
 
     protected GenericDaoImpl() {
-        Type t = getClass().getGenericSuperclass();
-        ParameterizedType pt = (ParameterizedType) t;
-        entityType = (Class) pt.getActualTypeArguments()[0];
+        this.entityType = null;
+    }
+
+    protected GenericDaoImpl(Class<Entity> entityType) {
+        this.entityType = entityType;
     }
 
     public EntityManager getEm() {
@@ -62,14 +59,14 @@ public class GenericDaoImpl<Entity extends DBEntity, ID extends Serializable> ex
 
     private void internalPersist(Entity e) {
         // update entity from context
-        e.setCreatedBy((Long) context.get(USER_KEY));
+        e.setCreatedBy((Long) context.get(LOGGED_USER_ID_KEY));
 
         getEm().persist(e);
     }
 
     private DBEntity internalSaveOrUpdate(DBEntity e) {
         // update entity from context
-        e.setUpdatedBy((Long) context.get(USER_KEY));
+        e.setUpdatedBy((Long) context.get(LOGGED_USER_ID_KEY));
 
         if (getEm().contains(e)) {
             return e;
