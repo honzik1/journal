@@ -46,7 +46,7 @@ public class CallPreFilter implements ContainerRequestFilter {
                 ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
                 if (methodInvoker != null) {
                     log.debug("Method: {}.{}\n{}",
-                            methodInvoker.getClass().getSimpleName(),
+                            methodInvoker.getGenericReturnType().getClass().getSimpleName(),
                             methodInvoker.getMethod().getName(),
                             inputData
                     );
@@ -66,25 +66,7 @@ public class CallPreFilter implements ContainerRequestFilter {
         inputData.append("URL: ").append(uriInfo.getRequestUri().toURL().toString()).append("\n");
         inputData.append("Headers: \n");
         appendHeadders(inputData, requestContext.getHeaders());
-        inputData.append("\n\n");
-        inputData.append("Properties: \n");
-        appendProperties(inputData, requestContext);
-
         return inputData.toString();
-    }
-
-    private void appendProperties(StringBuilder sb, ContainerRequestContext requestContext) {
-        for (String name : requestContext.getPropertyNames()) {
-            sb.append(name).append(" = ");
-            Object property = requestContext.getProperty(name);
-            if (property == null) {
-                sb.append("NULL");
-            } else {
-                sb.append(property.toString());
-            }
-            sb.append("\n");
-        }
-
     }
 
     private void appendHeadders(StringBuilder sb, MultivaluedMap<String, String> headers) {

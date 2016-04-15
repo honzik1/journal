@@ -22,7 +22,7 @@ public class EjbUtil {
         final Hashtable jndiProperties = new Hashtable();
         jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
         final Context jndiContext = new InitialContext(jndiProperties);
-        return (T) jndiContext.lookup("java:app/" + module + "-" + conf.getString(VERSION_NUMBER) + "/" + clazz.getSimpleName());
+        return (T) jndiContext.lookup("java:app/" + module + "-" + conf.getString(VERSION_NUMBER) + "/" + clazz.getSimpleName() + "Impl");
     }
 
     public static <T> T findBeanWithinModule(Class<T> clazz) throws NamingException {
