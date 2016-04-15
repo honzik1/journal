@@ -1,5 +1,6 @@
 package cz.jh.journal.model;
 
+import cz.jh.journal.rest.view.View;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -14,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  * @author jan.horky
@@ -26,6 +28,7 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({View.Summary.class,View.Detail.class})
     private ID id;
     /**
      * Creation time of entity (automatically filled)
@@ -33,6 +36,7 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @NotNull(message = "createTime is required.")
     @Column(updatable = false)
+    @JsonView(View.Detail.class)
     private Date createTime;
     /**
      * Update time of entity (automatically filled)
@@ -58,7 +62,7 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
 
     @Version
     @Column(nullable = false)
-    @XmlTransient
+    @JsonView(View.Detail.class)
     private long version;
 
     public DBEntity() {

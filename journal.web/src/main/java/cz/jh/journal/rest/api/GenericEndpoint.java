@@ -9,6 +9,7 @@ import static cz.jh.journal.Const.JSON_MT;
 import cz.jh.journal.business.model.UserRole;
 import cz.jh.journal.model.DBEntity;
 import cz.jh.journal.rest.util.ResponseFactory;
+import cz.jh.journal.rest.view.View;
 import cz.jh.journal.service.GenericService;
 import java.util.List;
 import javax.annotation.security.PermitAll;
@@ -27,6 +28,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  * Generic REST endpoint for any database entity and its service
@@ -63,6 +65,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     @Path("/{id:[0-9][0-9]*}")
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT, UserRole.SUBS})
+    @JsonView({View.Detail.class})
     public Response findById(@PathParam("id") @NotNull Long id) {
         return Response.ok(service.find(id)).build();
     }
@@ -70,6 +73,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     @GET
     @Produces(JSON_MT)
     @PermitAll
+    @JsonView(View.Summary.class)
     public List<Entity> listAll(
             @QueryParam("start") @NotNull Integer startPosition,
             @QueryParam("max") @NotNull Integer maxResult) {

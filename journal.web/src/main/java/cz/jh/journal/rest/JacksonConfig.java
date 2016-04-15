@@ -35,6 +35,7 @@ public class JacksonConfig implements ContextResolver<ObjectMapper> {
         this.objectMapper.setDateFormat(simpleDateFormat);
         this.objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
         this.objectMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
+        this.objectMapper.configure(SerializationConfig.Feature.DEFAULT_VIEW_INCLUSION, false);
         this.objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
     }
 

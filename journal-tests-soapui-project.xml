@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="journal-tests" resourceRoot="${projectDir}" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+<con:soapui-project activeEnvironment="Default" name="journal-tests" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config">
   <con:settings/>
   <con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <con:settings/>
@@ -10,43 +10,168 @@
     <con:resource name="Journal" path="/journal/api/v1/journal">
       <con:settings/>
       <con:parameters>
-        <con:parameter>
-          <con:name>start</con:name>
-          <con:value>0</con:value>
-          <con:style>QUERY</con:style>
-          <con:default>0</con:default>
-          <con:path xsi:nil="true"/>
-          <con:description xsi:nil="true"/>
-        </con:parameter>
-        <con:parameter>
+        <con:parameter required="true">
           <con:name>max</con:name>
-          <con:value>10</con:value>
+          <con:value/>
           <con:style>QUERY</con:style>
-          <con:default>10</con:default>
-          <con:path xsi:nil="true"/>
-          <con:description xsi:nil="true"/>
+          <con:default/>
         </con:parameter>
       </con:parameters>
+      <con:resource name="journal detail by {id}" path="{id}">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>id</con:name>
+            <con:value>id</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>id</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="Method 1" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:representation type="FAULT">
+            <con:mediaType>text/html; charset=UTF-8</con:mediaType>
+            <con:status>500</con:status>
+            <con:params/>
+            <con:element>html</con:element>
+          </con:representation>
+          <con:representation type="FAULT">
+            <con:mediaType>application/json</con:mediaType>
+            <con:status>500 401</con:status>
+            <con:params/>
+            <con:element xmlns:ns="http://localhost/journal/api/v1/journal/3">ns:Fault</con:element>
+          </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType>application/json</con:mediaType>
+            <con:status>200</con:status>
+            <con:params/>
+            <con:element xmlns:ns="http://localhost/journal/api/v1/journal/3">ns:Response</con:element>
+          </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType xsi:nil="true"/>
+            <con:status>200</con:status>
+            <con:params/>
+            <con:element>data</con:element>
+          </con:representation>
+          <con:request name="detail" mediaType="application/json">
+            <con:settings/>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters>
+              <entry key="id" value="3" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>id</con:entry>
+            </con:parameterOrder>
+          </con:request>
+        </con:method>
+      </con:resource>
       <con:method name="Journal" method="GET">
         <con:settings/>
         <con:parameters/>
-        <con:request name="Request 1" mediaType="application/json">
+        <con:representation type="FAULT">
+          <con:mediaType>text/html; charset=UTF-8</con:mediaType>
+          <con:status>500</con:status>
+          <con:params/>
+          <con:element>html</con:element>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element>Response</con:element>
+        </con:representation>
+        <con:representation type="FAULT">
+          <con:mediaType>text/plain</con:mediaType>
+          <con:status>400</con:status>
+          <con:params/>
+          <con:element>data</con:element>
+        </con:representation>
+        <con:representation type="FAULT">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>401</con:status>
+          <con:params/>
+          <con:element xmlns:ns="http://localhost/journal/api/v1/journal/3">ns:Fault</con:element>
+        </con:representation>
+        <con:request name="list" mediaType="application/json">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:8080</con:endpoint>
           <con:request/>
+          <con:originalUri>http://localhost/journal/api/v1/journal</con:originalUri>
           <con:credentials>
-            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
             <con:authType>No Authorization</con:authType>
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
           <con:parameters/>
-          <con:parameterOrder>
-            <con:entry>start</con:entry>
-            <con:entry>max</con:entry>
-          </con:parameterOrder>
+          <con:parameterOrder/>
+        </con:request>
+      </con:method>
+      <con:method name="create" method="POST">
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="REQUEST">
+          <con:mediaType>application/json</con:mediaType>
+          <con:params/>
+        </con:representation>
+        <con:representation type="FAULT">
+          <con:mediaType>text/html</con:mediaType>
+          <con:status>400</con:status>
+          <con:params/>
+          <con:element>html</con:element>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element xmlns:jour="http://localhost/journal/api/v1/journal">jour:Response</con:element>
+        </con:representation>
+        <con:representation type="FAULT">
+          <con:mediaType>text/html; charset=UTF-8</con:mediaType>
+          <con:status>500</con:status>
+          <con:params/>
+          <con:element>html</con:element>
+        </con:representation>
+        <con:request name="create" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${#TestCase#jwt}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:endpoint>http://localhost:8080</con:endpoint>
+          <con:request>{
+   "title": "American Journal of Transplantation",
+   "abbrTitle": "Am. J. Transplant.",
+   "language": "English",
+   "publisher": "Wiley-Blackwell on behalf of the American Society of Transplant Surgeons and the American Society of Transplantation (United States)",
+   "publicFrom": "2001-01-01",
+   "frequency": "MONTHLY",
+   "impactFactor": 5.683,
+   "impactFactorYear": 2014,
+   "issn": "1600-6135",
+   "lccn": "2001229844",
+   "coden": "AJTMBR",
+   "oclc": "47727849",
+   "discipline":    {
+      "id": 2
+   },
+   "editedBy":    {
+      "id": 1
+   }
+}</con:request>
+          <con:credentials>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:jmsPropertyConfig/>
+          <con:parameters/>
+          <con:parameterOrder/>
         </con:request>
       </con:method>
     </con:resource>
@@ -59,7 +184,21 @@
     </con:endpoints>
     <con:resource name="User" path="/journal/api/v1/user">
       <con:settings/>
-      <con:parameters/>
+      <con:parameters>
+        <con:parameter required="true">
+          <con:name>start</con:name>
+          <con:value>0</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>0</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter required="true">
+          <con:name>max</con:name>
+          <con:value>10</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>10</con:default>
+        </con:parameter>
+      </con:parameters>
       <con:resource name="login" path="login">
         <con:settings/>
         <con:parameters/>
@@ -141,6 +280,7 @@
             <con:parameterOrder>
               <con:entry>email</con:entry>
               <con:entry>password</con:entry>
+              <con:entry>start</con:entry>
             </con:parameterOrder>
           </con:request>
         </con:method>
@@ -179,6 +319,18 @@
             <con:params/>
             <con:element>data</con:element>
           </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType xsi:nil="true"/>
+            <con:status>204</con:status>
+            <con:params/>
+            <con:element>data</con:element>
+          </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType xsi:nil="true"/>
+            <con:status>204</con:status>
+            <con:params/>
+            <con:element>data</con:element>
+          </con:representation>
           <con:request name="logout" mediaType="application/json" postQueryString="false">
             <con:settings>
               <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
@@ -193,26 +345,78 @@
             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
             <con:jmsPropertyConfig/>
             <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>start</con:entry>
+              <con:entry>max</con:entry>
+            </con:parameterOrder>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="user detail by {id}" path="{id}">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>id</con:name>
+            <con:value>id</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>id</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="Method 1" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:representation type="RESPONSE">
+            <con:mediaType>application/json</con:mediaType>
+            <con:status>200</con:status>
+            <con:params/>
+            <con:element xmlns:ns="http://localhost/journal/api/v1/user/1">ns:Response</con:element>
+          </con:representation>
+          <con:request name="detail" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
           </con:request>
         </con:method>
       </con:resource>
       <con:method name="User" method="GET">
         <con:settings/>
         <con:parameters/>
-        <con:request name="Request 1" mediaType="application/json">
+        <con:representation type="FAULT">
+          <con:mediaType>text/plain</con:mediaType>
+          <con:status>400</con:status>
+          <con:params/>
+          <con:element>data</con:element>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element>Response</con:element>
+        </con:representation>
+        <con:request name="list" mediaType="application/json">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:8080</con:endpoint>
           <con:request/>
+          <con:originalUri>http://localhost/journal/api/v1/user</con:originalUri>
           <con:credentials>
-            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
             <con:authType>No Authorization</con:authType>
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
           <con:parameters/>
-          <con:parameterOrder/>
+          <con:parameterOrder>
+            <con:entry>start</con:entry>
+          </con:parameterOrder>
         </con:request>
       </con:method>
     </con:resource>
@@ -222,6 +426,49 @@
     <con:runType>SEQUENTIAL</con:runType>
     <con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" id="39af5ff6-c79f-4b03-b11c-882250bd2218">
       <con:settings/>
+      <con:testStep type="restrequest" name="journal-list">
+        <con:settings/>
+        <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/journal" methodName="Journal" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="journal-list" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/journal/api/v1/journal</con:originalUri>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+            <con:parameterOrder/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="user-list">
+        <con:settings/>
+        <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/user" methodName="User" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="user-list" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/journal/api/v1/user</con:originalUri>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>start</con:entry>
+            </con:parameterOrder>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
       <con:testStep type="restrequest" name="login">
         <con:settings/>
         <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/user/login" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -262,6 +509,90 @@
           </con:transfers>
         </con:config>
       </con:testStep>
+      <con:testStep type="restrequest" name="journal-detail">
+        <con:settings/>
+        <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/journal/{id}" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="journal-detail" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${#TestCase#jwt}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/journal/api/v1/journal/3</con:originalUri>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters>
+              <entry key="id" value="3" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>id</con:entry>
+            </con:parameterOrder>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="user-detail">
+        <con:settings/>
+        <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/user/{id}" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Method 1 - detail" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${#TestCase#jwt}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://localhost/journal/api/v1/user/1</con:originalUri>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters>
+              <entry key="id" value="1" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="journal-create">
+        <con:settings/>
+        <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/journal" methodName="create" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="journal-create" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${#TestCase#jwt}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+            <con:request>{
+   "title": "American Journal of Transplantation",
+   "abbrTitle": "Am. J. Transplant.",
+   "language": "English",
+   "publisher": "Wiley-Blackwell on behalf of the American Society of Transplant Surgeons and the American Society of Transplantation (United States)",
+   "publicFrom": "2001-01-01T00:00:00",
+   "frequency": "MONTHLY",
+   "impactFactor": 5.683,
+   "impactFactorYear": 2014,
+   "issn": "1600-6135",
+   "lccn": "2001229844",
+   "coden": "AJTMBR",
+   "oclc": "47727849",
+   "discipline":    {
+      "id": 2
+   },
+   "editedBy":    {
+      "id": 1
+   }
+}</con:request>
+            <con:originalUri>http://localhost/journal/api/v1/journal</con:originalUri>
+            <con:credentials>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+            <con:parameterOrder/>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
       <con:testStep type="restrequest" name="logout">
         <con:settings/>
         <con:config service="http://localhost:8080" resourcePath="/journal/api/v1/user/logout" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -279,13 +610,17 @@
             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
             <con:jmsPropertyConfig/>
             <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>start</con:entry>
+              <con:entry>max</con:entry>
+            </con:parameterOrder>
           </con:restRequest>
         </con:config>
       </con:testStep>
       <con:properties>
         <con:property>
           <con:name>jwt</con:name>
-          <con:value>eyJhbGciOiJIUzI1NiIsImN0eSI6ImFwcGxpY2F0aW9uL2pzb24ifQ.eyJpZCI6IjYyZjJmMzUzLWM1ZmItNGE3MC04YWJlLTdiNDk3N2E1MDU2ZiIsImV4cGlyYXRpb24iOjE0NjA3MDMwNDY1OTMsIm5vdEJlZm9yZSI6MCwiaXNzdWVkQXQiOjE0NjA3MDEyNDYsImlzc3VlciI6bnVsbCwiYXVkaWVuY2UiOm51bGwsInByaW5jaXBhbCI6IjEiLCJ0eXBlIjoiSldUIiwiYWN0aXZlIjp0cnVlLCJleHBpcmVkIjpmYWxzZX0.Vl7GPuxzNVKpUmENdKJk0yl32USLxYhsiF-voj25kfs</con:value>
+          <con:value>eyJhbGciOiJIUzI1NiIsImN0eSI6ImFwcGxpY2F0aW9uL2pzb24ifQ.eyJqdGkiOiIxNjRhNWI4NS00ZTE5LTRlNGYtYjA1YS1iNWQ3ZDE5ZTYzOWIiLCJleHAiOjE0NjA3NTc2NTIzNTcsIm5iZiI6MCwiaWF0IjoxNDYwNzU1ODUyLCJwcm4iOiIxIiwidHlwIjoiSldUIn0.y_sXZRRZU5bImKm4Af1q41KPmCjB_3arMGCvkKAh8Bo</con:value>
         </con:property>
       </con:properties>
     </con:testCase>

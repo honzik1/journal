@@ -1,8 +1,10 @@
 package cz.jh.journal.model;
 
+import cz.jh.journal.rest.view.View;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  * @author jan.horky
@@ -14,6 +16,7 @@ public class NamedEntity extends DBEntity<Long> {
 
     @NotNull
     @Column(nullable = false)
+    @JsonView({View.Summary.class,View.Detail.class})
     private String title;
 
     public String getTitle() {

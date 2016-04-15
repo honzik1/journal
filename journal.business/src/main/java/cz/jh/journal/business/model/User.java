@@ -1,11 +1,15 @@
 package cz.jh.journal.business.model;
 
 import cz.jh.journal.model.DBEntity;
+import cz.jh.journal.rest.view.View;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  * @author jan.horky
@@ -17,12 +21,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class User extends DBEntity<Long> {
 
     @Enumerated(EnumType.STRING)
+    @JsonView(View.Detail.class)
     private UserRole role;
+    @JsonView({View.Summary.class,View.Detail.class})
     private String firstName;
+    @JsonView({View.Summary.class,View.Detail.class})
     private String lastName;
     @Column(unique = true)
+    @JsonView({View.Summary.class,View.Detail.class})
     private String email;
+    @XmlTransient
+    @JsonIgnore
     private String password;
+    @JsonView(View.Detail.class)
     private boolean active;
 
     public User() {
