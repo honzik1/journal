@@ -12,6 +12,8 @@ public class Const {
     public static final String DEFAULT_CONFIGURATION_FILE = "conf/journal.default.properties";
     public static final String JBOSS_CONF_DIR_SYS_PROP = "jboss.server.config.dir";
 
+    public static final String DEFAULT_EXT = "pdf";
+
     /**
      * Date Time Patterns
      */
@@ -45,8 +47,8 @@ public class Const {
     public static final String WWW_FORM = "application/json";
     public static final String API_BASE_V1 = "/api/v1";
     public static final String JOURNAL_API_BASE = "/journal";
+    public static final String ARTICLE_API_BASE = JOURNAL_API_BASE + "/{journalId}/article";
     public static final String USER_API_BASE = "/user";
-    public static final String ARTICLE_API_BASE = "/article";
     public static final String AUTHORIZATION_PROPERTY = "Authorization";
 
 }

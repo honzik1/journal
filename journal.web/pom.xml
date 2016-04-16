@@ -23,6 +23,10 @@
             <artifactId>journal.business</artifactId>
             <type>ejb</type>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -10,11 +10,23 @@
     <artifactId>journal.business</artifactId>
     <packaging>ejb</packaging>
 
+    <properties>
+        <startup.sql.scripts>
+            /dev-data.sql
+        </startup.sql.scripts>
+
+    </properties>
+
     <name>${project.artifactId}</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>journal.common</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>journal.storage</artifactId>
             <type>ejb</type>
         </dependency>
         <!-- Spring IoC/Test library -->

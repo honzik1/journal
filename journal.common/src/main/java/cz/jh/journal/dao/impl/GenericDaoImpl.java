@@ -58,8 +58,9 @@ public abstract class GenericDaoImpl<Entity extends DBEntity, ID extends Seriali
     }
 
     private void internalPersist(Entity e) {
+        final Long userId = (Long) context.get(LOGGED_USER_ID_KEY);
         // update entity from context
-        e.setCreatedBy((Long) context.get(LOGGED_USER_ID_KEY));
+        e.setCreatedBy(userId != null ? userId : -1);
 
         getEm().persist(e);
     }

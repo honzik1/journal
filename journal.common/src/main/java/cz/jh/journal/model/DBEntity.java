@@ -28,7 +28,7 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({View.Summary.class,View.Detail.class})
+    @JsonView({View.Summary.class, View.Detail.class})
     private ID id;
     /**
      * Creation time of entity (automatically filled)
@@ -112,6 +112,9 @@ public class DBEntity<ID extends Serializable & Comparable<ID>> implements Seria
     public void setDBElement(DBEntity<ID> el) {
         if (el.getId() != null) {
             this.setId(el.getId());
+        }
+        if (el.getCreateTime() != null) {
+            this.createTime = el.getCreateTime();
         }
         if (el.getCreatedBy() != null) {
             this.setCreatedBy(el.getCreatedBy());

@@ -11,6 +11,7 @@ import cz.jh.journal.model.DBEntity;
 import cz.jh.journal.rest.util.ResponseFactory;
 import cz.jh.journal.rest.view.View;
 import cz.jh.journal.service.GenericService;
+import cz.jh.journal.util.ProcessingContext;
 import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -37,7 +38,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
  * @param <Entity>
  * @param <Service>
  */
-public abstract class GenericEndpoint<Entity extends DBEntity, Service extends GenericService<Entity>> {
+public abstract class GenericEndpoint<Entity extends DBEntity, Service extends GenericService<Entity>> extends ProcessingContext {
 
     @EJB
     protected Service service;
@@ -54,7 +55,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     }
 
     @DELETE
-    @Path("/{id:[0-9][0-9]*}")
+    @Path("/{id:[1-9][0-9]*}")
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT})
     public Response deleteById(@PathParam("id") @NotNull Long id) {
@@ -62,7 +63,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     }
 
     @GET
-    @Path("/{id:[0-9][0-9]*}")
+    @Path("/{id:[1-9][0-9]*}")
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT, UserRole.SUBS})
     @JsonView({View.Detail.class})
@@ -81,7 +82,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     }
 
     @PUT
-    @Path("/{id:[0-9][0-9]*}")
+    @Path("/{id:[1-9][0-9]*}")
     @Consumes(JSON_MT)
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT})
@@ -90,9 +91,12 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
         if (!id.equals(entity.getId())) {
             return ResponseFactory.createResponseError(Response.Status.BAD_REQUEST, "CorruptedData", "Unable to update entity because IDs not corresponding.");
         }
-        if (service.find(id) == null) {
+        final Entity foundEntity = service.find(id);
+        if (foundEntity == null) {
             return ResponseFactory.createResponseNotFound();
         }
+        entity.setDBElement(foundEntity);
+
         service.update(entity);
 
         return ResponseFactory.createResponseOK();

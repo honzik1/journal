@@ -55,6 +55,13 @@ public class Journal extends NamedEntity {
     @JsonView({View.Summary.class, View.Detail.class})
     private User editedBy;
 
+    public Journal() {
+    }
+
+    public Journal(long journalId) {
+        this.setId(journalId);
+    }
+
     public String getAbbrTitle() {
         return abbrTitle;
     }

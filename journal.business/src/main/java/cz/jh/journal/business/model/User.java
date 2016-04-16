@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
@@ -23,21 +21,23 @@ public class User extends DBEntity<Long> {
     @Enumerated(EnumType.STRING)
     @JsonView(View.Detail.class)
     private UserRole role;
-    @JsonView({View.Summary.class,View.Detail.class})
+    @JsonView({View.Summary.class, View.Detail.class})
     private String firstName;
-    @JsonView({View.Summary.class,View.Detail.class})
+    @JsonView({View.Summary.class, View.Detail.class})
     private String lastName;
     @Column(unique = true)
-    @JsonView({View.Summary.class,View.Detail.class})
+    @JsonView({View.Summary.class, View.Detail.class})
     private String email;
-    @XmlTransient
-    @JsonIgnore
     private String password;
     @JsonView(View.Detail.class)
     private boolean active;
 
     public User() {
         this.active = true;
+    }
+
+    public User(Long id) {
+        this.setId(id);
     }
 
     public UserRole getRole() {

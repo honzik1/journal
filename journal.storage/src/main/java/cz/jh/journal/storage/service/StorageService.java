@@ -15,7 +15,7 @@ import java.io.InputStream;
  */
 public interface StorageService {
 
-    void saveDocument(Document doc, InputStream data);
+    String saveDocument(Document doc, InputStream data);
 
     File readDocument(Document doc);
 }

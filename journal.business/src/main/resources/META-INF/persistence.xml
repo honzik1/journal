@@ -9,8 +9,8 @@
         <validation-mode>AUTO</validation-mode>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
 
@@ -19,6 +19,8 @@
             <property name="hibernate.cache.use_structured_entries" value="false"/>
             <property name="hibernate.cache.generate_statistics" value="false"/>
 
+            <property name="hibernate.hbm2ddl.import_files" value="${startup.sql.scripts}"/>
+            <property name="hibernate.hbm2ddl.import_files_sql_extractor" value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor"/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.commons.io.FileUtils;
@@ -25,17 +26,19 @@ import org.apache.commons.io.FileUtils;
  * @author jan.horky
  */
 @Named
+@RequestScoped
 public class StorageServiceImpl implements StorageService {
 
     @Inject
     private ConfigurationService conf;
 
     @Override
-    public void saveDocument(Document doc, InputStream data) {
+    public String saveDocument(Document doc, InputStream data) {
         final int depth = conf.getInt(STORAGE_DEPTH);
         final String root = conf.getString(STORAGE_ROOT);
+        final String relativePath = doc.getPath(depth);
 
-        final Path path = Paths.get(root + doc.getPath(depth));
+        final Path path = Paths.get(root + relativePath);
         if (path.getParent().toFile().mkdirs()) {
             try {
                 FileUtils.copyInputStreamToFile(data, path.toFile());
@@ -45,6 +48,7 @@ public class StorageServiceImpl implements StorageService {
         } else {
             throw new StorageException("Unable to create storage directory: " + path.getParent().toString());
         }
+        return relativePath;
     }
 
     @Override

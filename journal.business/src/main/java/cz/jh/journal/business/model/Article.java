@@ -1,6 +1,7 @@
 package cz.jh.journal.business.model;
 
 import cz.jh.journal.model.NamedEntity;
+import cz.jh.journal.rest.view.View;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  * @author jan.horky
@@ -20,21 +23,29 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Article extends NamedEntity {
 
+    @JsonView({View.Detail.class})
     private String authors;
+    @JsonView({View.Detail.class})
     private String abst;
+    @JsonView({View.Detail.class})
     private String doi;
     @Temporal(javax.persistence.TemporalType.DATE)
     @NotNull(message = "publishDate is required.")
     @Column(nullable = false)
+    @JsonView({View.Detail.class})
     private Date publishDate;
+    @JsonView({View.Detail.class})
     private String copyright;
+    @JsonView({View.Detail.class})
     private String fileId;
     private String filePath;
     @ManyToOne(fetch = FetchType.LAZY)
     @XmlTransient
+    @JsonBackReference
     private User owner;
     @ManyToOne(fetch = FetchType.LAZY)
     @XmlTransient
+    @JsonBackReference
     private Journal journal;
 
     public String getAuthors() {
