@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.management.ServiceNotFoundException;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -42,7 +43,8 @@ public class CallPostFilter extends ProcessingContext implements ContainerRespon
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
         try {
             final String url = uriInfo.getRequestUri().toString();
-            if (SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
+
+            if (!HttpMethod.OPTIONS.equals(requestContext.getMethod()) && SUCCESSFUL.equals(response.getStatusInfo().getFamily())) {
                 boolean logEnabled = confMan.getBoolean(REST_LOG_ENABLED);
                 if (logEnabled) {
                     ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");

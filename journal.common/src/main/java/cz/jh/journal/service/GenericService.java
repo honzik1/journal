@@ -5,9 +5,9 @@
  */
 package cz.jh.journal.service;
 
+import cz.jh.journal.model.DBEntity;
 import java.util.List;
 import javax.ejb.Local;
-import cz.jh.journal.model.DBEntity;
 
 /**
  *
@@ -24,5 +24,9 @@ public interface GenericService<Entity extends DBEntity> {
 
     Entity find(Long id);
 
+    // TODO: filter, order
     List<Entity> list(int first, int pageSize);
+
+    // TODO: filter
+    long count();
 }

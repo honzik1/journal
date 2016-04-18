@@ -8,11 +8,11 @@ package cz.jh.journal.rest.api;
 import static cz.jh.journal.Const.JSON_MT;
 import cz.jh.journal.business.model.UserRole;
 import cz.jh.journal.model.DBEntity;
+import cz.jh.journal.rest.api.model.ListEnvelope;
 import cz.jh.journal.rest.util.ResponseFactory;
 import cz.jh.journal.rest.view.View;
 import cz.jh.journal.service.GenericService;
 import cz.jh.journal.util.ProcessingContext;
-import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -51,7 +51,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT})
     public Response create(@NotNull Entity entity) {
-        return Response.ok(service.create(entity)).build();
+        return ResponseFactory.createResponseOK(service.create(entity));
     }
 
     @DELETE
@@ -59,7 +59,7 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     @Produces(JSON_MT)
     @RolesAllowed(value = {UserRole.EDIT})
     public Response deleteById(@PathParam("id") @NotNull Long id) {
-        return Response.ok(service.delete(id)).build();
+        return ResponseFactory.createResponseOK(service.delete(id));
     }
 
     @GET
@@ -68,17 +68,20 @@ public abstract class GenericEndpoint<Entity extends DBEntity, Service extends G
     @RolesAllowed(value = {UserRole.EDIT, UserRole.SUBS})
     @JsonView({View.Detail.class})
     public Response findById(@PathParam("id") @NotNull Long id) {
-        return Response.ok(service.find(id)).build();
+        return ResponseFactory.createResponseOK(service.find(id));
     }
 
     @GET
     @Produces(JSON_MT)
     @PermitAll
     @JsonView(View.Summary.class)
-    public List<Entity> listAll(
+    public Response listAll(
             @QueryParam("start") @NotNull Integer startPosition,
             @QueryParam("max") @NotNull Integer maxResult) {
-        return service.list(startPosition, maxResult);
+        ListEnvelope<Entity> env = new ListEnvelope<>();
+        env.setTotal(service.count());
+        env.setRecords(service.list(startPosition, maxResult));
+        return ResponseFactory.createResponseOK(env);
     }
 
     @PUT

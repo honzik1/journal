@@ -1,5 +1,6 @@
 package cz.jh.journal.rest;
 
+import com.google.common.collect.Sets;
 import static cz.jh.journal.Const.API_BASE_V1;
 import cz.jh.journal.rest.api.ArticleEndpoint;
 import cz.jh.journal.rest.api.JournalEndpoint;
@@ -14,6 +15,7 @@ import cz.jh.journal.rest.filter.SecurityPreProcessFilter;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import org.jboss.resteasy.plugins.interceptors.CorsFilter;
 import org.jboss.resteasy.plugins.providers.multipart.MimeMultipartProvider;
 
 @ApplicationPath(API_BASE_V1)
@@ -38,6 +40,17 @@ public class RestApplication extends Application {
         resources.add(MimeMultipartProvider.class);
 
         return resources;
+    }
+
+    @Override
+    public Set<Object> getSingletons() {
+        final Set<Object> singletons = Sets.newHashSet(super.getSingletons());
+        final CorsFilter corsFilter = new CorsFilter();
+        // TODO: configurable origins
+        corsFilter.getAllowedOrigins().add("*");
+        corsFilter.setAllowedHeaders("Content-Type,Authorization");
+        singletons.add(corsFilter);
+        return singletons;
     }
 
 }

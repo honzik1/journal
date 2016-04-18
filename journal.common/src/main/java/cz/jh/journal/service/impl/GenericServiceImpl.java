@@ -51,4 +51,9 @@ public abstract class GenericServiceImpl<Entity extends DBEntity> extends Proces
     public List<Entity> list(int first, int pageSize) {
         return getRootEntityDao().findAll(first, pageSize, "createTime", Boolean.FALSE, null, null, null);
     }
+
+    @Override
+    public long count() {
+        return getRootEntityDao().count();
+    }
 }
